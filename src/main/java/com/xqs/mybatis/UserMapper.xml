@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xqs.mybatis.UserMapper">
+<cache></cache>
+	<resultMap type="User" id="userMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="ip" column="ip" />
+	</resultMap>
+
+	<!-- id：全局唯一，标识业务，对应mapper接口的方法名 -->
+	<!-- parameterType：optional，mybatis会根据TypeHandler推断出具体传入语句的参数 -->
+	<!-- resultType：从这条语句中返回的期望类型的类的完全限定名或别名。注意如果是集合情形，那应该是可以包含的类型，而不是集合本身。resultType和resultMap不能同时使用 -->
+	<!-- resultMap：外部resultMap的命名引用。强大的特性 -->
+	<!-- flushCache：将其设置为true，任何时候只要语句被调用，都会导致“本地缓存”(也叫“一级缓存”)和“二级缓存”都会被清空，默认值false -->
+	<!-- useCache：将其设置为true，将会导致本条语句的结果被二级缓存，默认值：对select元素为true -->
+	<!-- timeout：在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值unset(依赖驱动) -->
+	<!-- fetchSize：这是尝试影响驱动程序每次批量返回的结果行数和这个设置值相等。默认值为unset(依赖驱动) -->
+	<!-- statementType：STATEMENT,PREPARED,CALLABLE三选一。默认值PREPARED -->
+	<!-- resultSetType：FORWARD_ONLY,SCROLL_SENSITIVE,SCROLL_INSENSITIVE中的一个，默认值unset(依赖驱动) -->
+	<!-- databaseId：如果mybatis-config配置了databaseProvider，mybatis会加载带databaseId的语句 -->
+	<!-- resultOrdered：仅针对嵌套结果select语句适用，如果为true，就是假设包含了嵌套结果集或是分组了 -->
+	<!-- resultSets： -->
+	<!-- map/hashmap并不是非常好的领域模型，所以简单查询可以用map，复杂查询可以使用下面第二种方式 -->
+	<select id="selectUser2Map" parameterType="int" resultType="hashmap">
+		select
+		id,name,inet_ntoa(ip) from user where id = #{id}
+	</select>
+
+	<!-- mybatis后台会创建一个ResultMap，在基于属性名映射到JavaBean上 -->
+	<select id="selectUser" parameterType="int" resultMap="userMap"><!-- -->
+		select id as "id",name as "name",inet_ntoa(ip) as "ip" from user where
+		id = #{id}
+	</select>
+
+	<update id="updateUserName">
+		update user set name=#{name} where id=#{id}
+	</update>
+</mapper>

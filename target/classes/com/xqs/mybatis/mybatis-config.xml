@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties>
+		<property name="username" value="root" />
+		<property name="password" value="iluying616" />
+		<property name="driver" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/test" />
+	</properties>
+	
+	<!-- 全局配置 -->
+	<settings>
+	   <!-- 开启或关闭配置文件中的所有Mapper已经配置的任何缓存。默认值true -->
+	   <setting name="cacheEnabled" value="true"/>
+	   <!-- 延迟加载开关，可被单独配置覆盖。默认值false -->
+	   <setting name="lazyLoadingEnabled" value="false"/>
+	   <!-- 开启时，任何方法的调用都会加载该对象的所有属性。否则，每个属性会按需加载(参考lazyLoadTriggerMethods)。默认值false(3.4.1版本改为true) -->
+	   <setting name="aggressiveLazyLoading" value="false"/>
+	   <!-- 是否允许单一语句返回多结果集(需要驱动兼容)。默认值true -->
+	   <setting name="multipleResultSetsEnabled" value="true"/>
+	   <!-- 使用列标签代替列名。不同驱动会有不同表现，具体可参考驱动文档或通过测试这两种不同模式来观察所有驱动的结果。默认true -->
+	   <setting name="useColumnLabel" value="true"/>
+	   <!-- 指定MyBatis赢如何自动映射列到字段或属性。NONE表示取消自动映射；PARTIAL只会自动映射没有定义嵌套结果集映射的结果集；FULL会自动映射任意复杂的结果集。默认PARTIAL -->
+	   <setting name="autoMappingBehavior" value="FULL"/>
+	   <!-- 指定发现自动映射目标未知列的行为。NONE不做任何反应；WARNING输出提醒日志；FAILING：映射失败，抛出SqlSessionException。默认NONE -->
+	   <setting name="autoMappingUnknownColumnBehavior" value="NONE"/>
+	   <!-- 配置默认的执行器。SIMPLE是普通执行器；REUSE执行器会重用预处理语句；BATCH执行将重用语句并执行批量更新 -->
+	   <setting name="defaultExecutorType" value="SIMPLE"/>
+	   <!-- 设置超时时间，决定驱动等待数据库相应的秒数，任意正整数。默认值Not Set(null) -->
+	   <setting name="defaultStatementTimeout" value="1"/>
+	   <!-- 为驱动的结果集获取数量(fetchSize)设置一个提示值。此参数只可以在查询设置中被覆盖。默认值Not Set(null) -->
+	   <setting name="defaultFetchSize" value="10"/>
+	   <!-- 允许在嵌套语句中使用分页。如果允许使用则设置为false！默认值False -->
+	   <setting name="safeRowBoundsEnabled" value="false"/>
+	   <!-- 允许在嵌套语句中使用分页。如果允许使用则设置为false！默认值True -->
+	   <setting name="safeResultHandlerEnabled" value="True"/>
+	   <!-- 是否开启自动驼峰命名规则映射，例子：经典数据库列名A_COLUMN映射到经典java属性名aColumn。默认值False -->
+	   <setting name="mapUnderscoreToCamelCase" value="True"/>
+	   <!-- MyBatis利用本地缓存机制防止循环引用和加速重复嵌套查询。默认值为SESSION，这种情况下会缓存一次会话中执行的所有查询。若设置为STATEMENT，则每次执行sql语句后都会清除缓存。 -->
+	   <!-- 该配置设置的是一级缓存，一级缓存是不可以关闭的，最多缓存1024条sql，属于SqlSession级别的缓存(SqlSession代表一次会话) -->
+	   <!-- 如果只需要对某一条sql语句禁用一级缓存，可以在对应的select元素上加上flushCache=true -->
+	   <setting name="localCacheScope" value="SESSION"/>
+	   <!-- 当没有为参数提供特定的JDBC类型时，为空值指定JDBC类型。默认值OTHER。多数情况直接用一般类型即可，比如NULL、VARCHAR、OTHER -->
+	   <setting name="jdbcTypeForNull" value="OTHER"/>
+	   <!-- 指定对象的哪个方法触发一次延迟加载 -->
+	   <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+	   <!-- 指定动态SQL生成的默认语言。一个类型的别名或完全限定类型。默认值org.apache.ibatis.scripting.xmltags.XMLLanguageDriver -->
+	   <setting name="defaultScriptingLanguage" value="org.apache.ibatis.scripting.xmltags.XMLLanguageDriver"/>
+       <!-- 指定Enum使用的默认TypeHandler(从3.4.5开始)。一个类型的别名或完全限定类型。默认值org.apache.ibatis.type.EnumTypeHandler -->
+       <setting name="defaultEnumTypeHandler" value="org.apache.ibatis.type.EnumTypeHandler"/>
+       <!-- 指定当结果集中值为null时是否调用映射对象的setter(map对象时为put)方法，这对于有Map.keySet()依赖或null值初始化的时候是有用的。注意基本类型(int,boolean等)是不能设置成null的。默认值false -->
+       <setting name="callSettersOnNulls" value="false"/>
+       <!-- 当返回行的所有列都是空时，MyBatis默认返回null。注意，它也适用于嵌套的结果集。(从3.4.2开始)。默认值false -->
+       <setting name="returnInstanceForEmptyRow" value="false"/>
+       <!-- 指定MyBatis增加到日志名称的前缀。默认值Not set -->
+       <setting name="logPrefix" value="xqs"/>
+       <!-- 指定MyBatis所用日志的具体实现，未指定时将自动查找。默认值Not set -->
+       <setting name="logImpl" value="STDOUT_LOGGING"/>
+       <!-- 指定MyBatis创建具有延迟加载能力的对象所用的的代理工具。CGLIB|JAVASSIST。默认值JAVASSIT(MyBatis 3.3 or above) -->
+       <setting name="proxyFactory" value="JAVASSIST"/>
+       <!-- 指定VFS的实现。自定义CFS的实现类的类全限定名，以逗号分隔默认值Not set -->
+       <!-- <setting name="vfsImpl" value="com.xqs.VFSPrototype"/> -->
+       <!-- 允许使用方法签名中的名称作为语句参数名称。为了使用该特性，你的工程必须采用Java 8比阿尼，并且加上-parameters选项。(从3.4.1开始) -->
+       <setting name="useActualParamName" value="true"/>
+       <!-- 指定一个提供Configuration实力的类。这个Configuration实力用来加载被反序列化对象的懒加载属性值。这个类必须包含一个签名方法static Configuration getConfiguration() -->
+       <!-- <setting name="configurationFactory" value="not set"/> -->
+	</settings>
+
+    <!-- 只和XML配置有关，存在的意义仅在于减少类完全限定名的冗余 -->	
+	<typeAliases>
+<!-- 	   <typeAlias alias="demo" type="com.xqs.demo.alias.AliasDemo"/> -->
+	   <!-- 指定包名，MyBatis会在包名下搜索@Alias标注的类，如果注解设置了别名则以别名为准，如果没设置则会使用Bean的首字母小写的非限定类名来作为它的别名 -->
+<!-- 	   <package name="com.xqs.demo.alias" /> -->
+	   <typeAlias type="com.xqs.mybatis.User" alias="User"/><!-- 配置一个别名，这样在mapper文件中就可以不用写类全名了 -->
+	   <package name="com.xqs.mybatis.type.handler" />
+	</typeAliases>
+	
+	<typeHandlers>
+	   <!-- 可配置javaType和jdbcType，也可以在实现类上增加注解@MappedTypes和@MappedJdbcTypes，javaType不是必须的，因为转换时javaType是已知的，而且类型转换器的泛型类型也表明转换器处理的javaType，但jdbcType是必须配置的 -->
+	   <typeHandler handler="myTypeHandler" />
+	   <!-- 可以让MyBatis自己查找类型转换器 -->
+	   <package name="com.xqs.mybatis.type.handler"/>
+	   <!-- 我们可创建如EnumOrdinalTypeHandler的泛型转换器，并在使用到该转换器的select、insert等元素中显式指明使用该转换器 -->
+	</typeHandlers>
+	
+	<!-- 插件，下面是可以插入插件调用点 -->
+	<!-- Executor(update, query, flushStatements, commit, rollback, getTransaction, close, isClosed) -->
+	<!-- ParameterHandler(getParameterObject, setParameters) -->
+	<!-- ResultSetHandler(handleResultSets, handleOutputParameters) -->
+	<!-- StatementHandler(prepare, parameterize, batch, update, query)  -->
+	<plugins>
+	   <plugin interceptor="com.xqs.mybatis.interceptor.ExampleInterceptor">
+	       <property name="today" value="2018-07-09"/>
+	   </plugin>
+	</plugins>
+	
+	<!-- 环境，SqlSessionFactoryBuilder实例只能选择一个环境进行初始化，最好配置默认环境，缺省情况下会使用它 -->
+	<!-- 每个环境对应一个数据库对象，SqlSessionFactoryBuilder实际是根据环境去与数据库建立连接并创建会话执行sql的 -->
+	<environments default="dev">
+		<environment id="dev">
+			<transactionManager type="JDBC" />
+			<!-- 数据源，type可选值有UNPOOLED不采用池化技术、POOLED采用池化技术、JNDI通过JNDI引用外部数据源 -->
+			<dataSource type="POOLED">
+			    <!-- UNPOOLED和POOLED都具备的基础属性 -->
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+				<!-- 如果要传递属性给驱动，注意加前缀driver -->
+				<property name="driver.encoding" value="UTF8"/>
+				
+				<!-- 下面是POOLED类型具备的属性 -->
+				<!-- 在任意时间可以存在的活动(也就是正在使用)连接数量，默认值10 -->
+				<property name="poolMaximumActiveConnections" value="10"/>
+				<!-- 任意时间可能存在的空闲连接数 -->
+				<property name="poolMaximumIdleConnections" value="5"/>
+				<!-- 在被强制返回前，池中连接被检出时间，默认值20000毫秒 -->
+				<property name="poolMaximumCheckoutTime" value="20000"/>
+				<!-- 这是一个底层设置，如果获取连接花费了相当长的时间，连接池会打印状态日志并重新尝试获取一个连接(避免在误配置下一直安静的失败)。默认值20000毫秒 -->
+				<property name="poolTimeToWait" value="20000"/>
+				<!-- 这是一个关于坏连接容忍度的底层设置，作用于每一个尝试从缓存池获取连接的线程。 -->
+				<!-- 如果这个线程获取到的是一个坏的连接，name这个数据源允许这个线程尝试重新获取一个新的连接，但是这个重新尝试的次数不应该超过poolMaximumIdleConnections与poolMaximumLocalBadConnectionTolerance之和。默认值3(新增与3.4.5) -->
+				<property name="poolMaximumLocalBadConnectionTolerance" value="3"/>
+				<!-- 发送数据库的侦测查询，用来检验连接是否正常工作并准备接受请求。默认是"NO PING QUERY SET"，这会导致多数数据库驱动失败时带有一个恰当的错误消息 -->
+				<property name="poolPingQuery" value="NO PING QUERY SET"/>
+				<!-- 是否启用侦测查询。若开启，需要设置poolPingQuery属性为一个可执行的SQL语句(最好是一个速度非常快的SQL语句)。默认值false -->
+				<property name="poolPingEnabled" value="false"/>
+				<!-- 配置poolPingQuery的频率。可以被设置为何数据库连接超时时间一样，来避免不必要的侦测。默认值0(即所有连接每一时刻都被侦测，当然仅当poolPingEnabled为true时使用) -->
+				<property name="poolPingConnectionsNotUsedFor" value="0"/>
+				<!-- 下面是JNDI类型具备的属性，不常用，用到的时候再去MyBatis官网查使用方法就好 -->
+				<!-- <property name="initial_context" value=""/> -->
+				<!-- <property name="data_source" value=""/> -->
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- MyBatis可以根据不同的数据库厂商执行不同的语句，这种多厂商支持是基于Mapper中的databaseId属性 -->
+	<!-- MyBatis会加载不带databaseId和匹配当前数据库databaseId的所有语句，如果同时找到两者，则不带databaseId的语句会被抛弃 -->
+	<!-- 这个属性不是很常用。通常我们开发的应用都是使用一种厂商，但不排除替换底层数据库产品时的过渡期我们需要使用新旧两种数据库，此时如果有databaseId则可以做平滑的切换，如果新数据库不稳定，随时可以切换回旧数据库 -->
+	<databaseIdProvider type="DB_VENDOR">
+	   <property name="SQL Server" value="sqlserver"/>
+	   <property name="DB2" value="db2"/>
+	   <property name="Oracle" value="oracle"/>
+	   <property name="MySQL" value="mysql"/>
+	</databaseIdProvider>
+	
+	<mappers>
+		<mapper resource="com/xqs/mybatis/UserMapper.xml" />
+		<!-- 其他形式的mapper -->
+		<!-- 使用完全限定资源定位符(URL)，从远程或本地加载，mapper文件外挂 -->
+		<!-- <mapper url="file:///d:/UserMapper.xml" /> -->
+		<!-- 使用映射器接口实现类的完全限定类名 -->
+		<!-- <mapper class="com.xqs.mybatis.mapper.UserMapper" /> -->
+		<!-- 将包内的映射器接口实现全部注册为映射器 -->
+		<!-- <package name="com.xqs.mybatis.mapper" /> -->
+	</mappers>
+</configuration>
