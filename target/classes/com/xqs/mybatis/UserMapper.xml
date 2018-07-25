@@ -9,6 +9,30 @@
 		<result property="name" column="name" />
 		<result property="ip" column="ip" />
 	</resultMap>
+	
+	<resultMap type="Blog" id="blogMap">
+	   <!-- 通常我们的DTO或领域模型是可以修改属性的，但有些情况希望使用不可变类，这样只需要定义构造方法而不用暴露设置属性的共有方法 -->
+	   <constructor>
+	       <!-- column,jdbcType,javaType,typeHandler和id,result元素的定义是一致的, -->
+	       <!-- 3.4.3版本开始，通过指定具体的名字，可以以任意书序写入arg元素，在mybatis-config中需要配置useActualParamName为true，该参数是默认开启的 -->
+           <idArg column="blog_id" javaType="int" name="id"/>
+           <arg column="content" javaType="String" name="content" />
+       </constructor>
+	   <!-- column：数据库中的列名或者是列的别名。一般情况下，这和传递给resultSet.getString(columnName)方法的参数一样 -->
+	   <!-- property：映射到列结果的字段或属性。如果用来匹配的JavaBeans存在给定名字的属性，name他将会被使用。 -->
+	   <!-- jdbcType：JDBC类型，只需要在“可能执行插入、更新和删除的”“允许空值的列上”指定JDBC类型。这是JDBC的要求而非mybatis的要求，具体包含哪些JDBC类型查看JdbcType -->
+	   <!-- javaType：一个Java类的完全限定名或别名。如果映射到一个JavaBean，mybatis通常可以判定类型。然而，如果映射到HashMap，则应该明确地指定javaType来保证期望行为 -->
+	   <!-- typeHandler：使用这个属性，可以覆盖默认类型处理器 -->
+	   <!-- id和result其实都是JavaBean的属性描述，但id表示的是对象的标识属性，在比较对象实例时用到，可以提高整体的性能，尤其是缓存和嵌套结果映射(待验证) -->
+	   <id column="blog_id" property="id" javaType="int" jdbcType="INTEGER"></id>
+	   <!-- result包含的属性和id元素一致，只是id元素 -->
+	   <result column="content" property="content"/>
+	   <association property="author" column="blog_author_id" javaType="Author">
+	       <id property="id" column="author_id" />
+	       <result property="username" column="author_username"/>
+	   </association>
+	   
+	</resultMap>
 
 	<!-- id：全局唯一，标识业务，对应mapper接口的方法名 -->
 	<!-- parameterType：optional，mybatis会根据TypeHandler推断出具体传入语句的参数 -->
@@ -21,8 +45,8 @@
 	<!-- statementType：STATEMENT,PREPARED,CALLABLE三选一。默认值PREPARED -->
 	<!-- resultSetType：FORWARD_ONLY,SCROLL_SENSITIVE,SCROLL_INSENSITIVE中的一个，默认值unset(依赖驱动) -->
 	<!-- databaseId：如果mybatis-config配置了databaseProvider，mybatis会加载带databaseId的语句 -->
-	<!-- resultOrdered：仅针对嵌套结果select语句适用，如果为true，就是假设包含了嵌套结果集或是分组了 -->
-	<!-- resultSets： -->
+	<!-- resultOrdered：仅针对嵌套结果select语句适用，如果为true，就是假设包含了嵌套结果集或是分组了，这样的话当返回一个主结果行的时候，就不会发生对前面结果集引用的情况。这就使得在获取嵌套的结果集的时候不至于导致内存不够用 -->
+	<!-- resultSets： 仅对多结果集的情况适用，他将列出语句执行后返回的结果集并给每个结果集一个名称，名称是逗号分隔的 -->
 	<!-- map/hashmap并不是非常好的领域模型，所以简单查询可以用map，复杂查询可以使用下面第二种方式 -->
 	<select id="selectUser2Map" parameterType="int" resultType="hashmap">
 		select

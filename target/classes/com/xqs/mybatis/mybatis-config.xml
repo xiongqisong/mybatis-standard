@@ -62,13 +62,13 @@
        <setting name="proxyFactory" value="JAVASSIST"/>
        <!-- 指定VFS的实现。自定义CFS的实现类的类全限定名，以逗号分隔默认值Not set -->
        <!-- <setting name="vfsImpl" value="com.xqs.VFSPrototype"/> -->
-       <!-- 允许使用方法签名中的名称作为语句参数名称。为了使用该特性，你的工程必须采用Java 8比阿尼，并且加上-parameters选项。(从3.4.1开始) -->
+       <!-- 允许使用方法签名中的名称作为语句参数名称。为了使用该特性，你的工程必须采用Java 8版本，并且加上-parameters选项。(从3.4.1开始) -->
        <setting name="useActualParamName" value="true"/>
        <!-- 指定一个提供Configuration实力的类。这个Configuration实力用来加载被反序列化对象的懒加载属性值。这个类必须包含一个签名方法static Configuration getConfiguration() -->
        <!-- <setting name="configurationFactory" value="not set"/> -->
 	</settings>
 
-    <!-- 只和XML配置有关，存在的意义仅在于减少类完全限定名的冗余 -->	
+    <!-- 只和XML配置有关，存在的意义仅在于减少类完全限定名的冗余，TypeHandler、ResultType等都可能使用到类全名 -->	
 	<typeAliases>
 <!-- 	   <typeAlias alias="demo" type="com.xqs.demo.alias.AliasDemo"/> -->
 	   <!-- 指定包名，MyBatis会在包名下搜索@Alias标注的类，如果注解设置了别名则以别名为准，如果没设置则会使用Bean的首字母小写的非限定类名来作为它的别名 -->
